@@ -38,7 +38,8 @@ class FileStorage:
         """retrieve one object based on cls-name and id"""
         if cls is not None or id is not None:
             for key, value in self.__objects.items():
-                if cls == value.__class__ or cls == value.__class__.__name__ and id == value.id:
+                if cls == value.__class__ or \
+                   cls == value.__class__.__name__ and id == value.id:
                     return value
         return None
 
