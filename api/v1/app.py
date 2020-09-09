@@ -6,8 +6,6 @@ from flask import Flask
 from models import storage
 from api.v1.views import app_views
 
-host_name = environ['HBNB_API_HOST']
-puerto = environ['HBNB_API_PORT']
 
 app = Flask(__name__)
 app.url_map.strict_slashes = False
@@ -24,4 +22,6 @@ def teardown(exc):
     storage.close()
 
 if __name__ == "__main__":
+    host_name = environ['HBNB_API_HOST']
+    puerto = environ['HBNB_API_PORT']
     app.run(host=host_name, port=puerto, threaded=True)
