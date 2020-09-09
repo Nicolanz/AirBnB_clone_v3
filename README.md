@@ -60,6 +60,18 @@ Classes inherited from Base Model:
 * `def new(self, obj)` - sets in __objects the obj with key <obj class name>.id
 * `def save(self)` - serializes __objects to the JSON file (path: __file_path)
 * ` def reload(self)` -  deserializes the JSON file to __objects
+* `def get(self, cls, id)` - Returns the object based on the class name and its ID, or None if not found
+* `def count(self, cls=None)` - Returns the number of objects in storage matching the given class name.
+
+[db_storage.py](/models/engine/db_storage) - serializes instances to MySql records & deserializes back to instances
+* `def all(self)` - query on the current database session
+* `def new(self, obj)` - add the object to the current database session
+* `def save(self)` - commit all changes of the current database session
+* ` def reload(self)` -  reloads data from the database
+* `def get(self, cls, id)` - retrieve one object based on cls name and id
+* `def count(self, cls=None)` - count the number of objects in storage based on cls
+* `def delete(self, obj=None)` - delete from the current database session obj if not None
+* `def close(self)` - call remove() method on the private session attribute
 
 #### `/tests` directory contains all unit test cases for this project:
 [/test_models/test_base_model.py](/tests/test_models/test_base_model.py) - Contains the TestBaseModel and TestBaseModelDocs classes
@@ -156,6 +168,8 @@ No known bugs at this time.
 ## Authors
 Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)  
 Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
+Nicolas Zarate - [Github](https://github.com/Nicolanz) / [Twitter](https://twitter.com/nicolas_zg)
+Juan Olivares - [Github](https://github.com/JuanOlivares1) / [Twitter](https://twitter.com/OlivaresP____)
 
 Second part of Airbnb: Joann Vuong
 ## License
