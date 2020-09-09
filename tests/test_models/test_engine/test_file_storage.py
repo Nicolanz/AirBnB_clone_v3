@@ -118,12 +118,18 @@ class TestFileStorage(unittest.TestCase):
     def test_get(self):
         """Test that gets the correct dictionary"""
         storage = FileStorage()
-        for state in storage.all(State).values():
-            self.assertEqual(storage.get(State, state.id), state)
-        self.assertEqual(storage.get(None, None), None)
+        state = State()
+        storage.new(state)
+        storage.save()
+        self.assertEqual(storage.get(State, state.id).id, state.id)
 
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_count(self):
         """Test that count the objects stored"""
         storage = FileStorage()
-        self.assertEqual(storage.count(State), len(storage.all(State)))
+        n = storage.count(State)
+        state = State()
+        storage.new(state)
+        storage.save()
+        storage.close()
+        self.assertEqual(n + 1, storage.count(State))
