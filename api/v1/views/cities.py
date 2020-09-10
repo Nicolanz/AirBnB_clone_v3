@@ -48,21 +48,20 @@ def delete_city(id):
 def create_city(id):
     """Creates a city object
     """
-    data = request.get_json()
-    if data is not None:
-        if "name" not in data.keys():
-            abort(400, description="Missing name")
-
-        state_id = storage.get(State, id)
-        if state_id is not None:
-            city = City(name=data["name"], state_id=id)
+    state = storage.get(State, id)
+    if state is not None:
+        data = request.get_json()
+        if data is not None:
+            if "name" not in data.keys():
+                abort(400, description="Missing name")
+            city = City(name=data["name"], state_id=state.id)
             storage.new(city)
             storage.save()
             response = make_response(jsonify(city.to_dict()), 201)
             response.headers["Content-Type"] = "application/json"
             return response
-        abort(404)
-    abort(400, description="Not a JSON")
+        abort(400, description="Not a JSON")
+    abort(404)
 
 
 @app_views.route('cities/<id>', methods=['PUT'])
