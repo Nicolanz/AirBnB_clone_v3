@@ -62,7 +62,7 @@ def create_city(id):
             response.headers["Content-Type"] = "application/json"
             return response
         abort(404)
-    abort(400, {"Not a JSON"})
+    abort(400, description="Not a JSON")
 
 
 @app_views.route('cities/<id>', methods=['PUT'])
