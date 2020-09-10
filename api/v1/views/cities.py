@@ -11,15 +11,15 @@ from models.state import State
 def all_cities(id):
     """Gets all cities of an object
     """
-    dict = storage.all(City)
-    list = []
-    for city in dict.values():
-        if city.state_id == id:
-            list.append(city.to_dict())
-    if len(list) == 0:
-        abort(404)
-    else:
+    state = storage.get(State, id)
+    if state is not None:
+        dict = storage.all(City)
+        list = []
+        for city in dict.values():
+            if city.state_id == state.id:
+                list.append(city.to_dict())
         return jsonify(list)
+    abort(404)
 
 
 @app_views.route('/cities/<id>', methods=['GET'])
@@ -64,7 +64,7 @@ def create_city(id):
     abort(404)
 
 
-@app_views.route('cities/<id>', methods=['PUT'])
+@app_views.route('/cities/<id>', methods=['PUT'])
 def update_city(id):
     """Updates city
     """
