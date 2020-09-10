@@ -13,7 +13,7 @@ from models.amenity import Amenity
 
 @app_views.route('/states', methods=['GET'])
 def all_states():
-    """Funtion to get all State objects
+    """Get all State objects
     """
     dict = storage.all(State)
     list = []
@@ -24,7 +24,7 @@ def all_states():
 
 @app_views.route('/states/<id>', methods=['GET'])
 def a_state(id):
-    """
+    """Get an specific object
     """
     state = storage.get(State, id)
     if state is not None:
@@ -34,7 +34,7 @@ def a_state(id):
 
 @app_views.route('/states/<id>', methods=['DELETE'])
 def delete_state(id):
-    """
+    """Deletes an object
     """
     state = storage.get(State, id)
     if state is not None:
@@ -46,7 +46,7 @@ def delete_state(id):
 
 @app_views.route('/states', methods=['POST'])
 def create_state():
-    """
+    """Creates an object
     """
     data = request.get_json()
     if data is not None:
@@ -63,7 +63,7 @@ def create_state():
 
 @app_views.route('/states/<id>', methods=['PUT'])
 def update_state(id):
-    """
+    """Updates an object
     """
     state = storage.get(State, id)
     if state is not None:
