@@ -49,20 +49,20 @@ def create_city(id):
     """Creates a city object
     """
     data = request.get_json()
-    if data is not None:
-        if "name" not in data.keys():
-            abort(400, description="Missing name")
+    state_id = storage.get(State, id)
 
-        state_id = storage.get(State, id)
-        if state_id is not None:
+    if state_id is not None:
+        if data is not None:
+            if "name" not in data.keys():
+                abort(400, description="Missing name")
             city = City(name=data["name"], state_id=id)
             storage.new(city)
             storage.save()
             response = make_response(jsonify(city.to_dict()), 201)
             response.headers["Content-Type"] = "application/json"
             return response
-        abort(404)
-    abort(400, description="Not a JSON")
+        abort(400, description="Not a JSON")
+    abort(404)
 
 
 @app_views.route('cities/<id>', methods=['PUT'])
@@ -74,7 +74,7 @@ def update_city(id):
         data = request.get_json()
         if data is not None:
             for key, value in data.items():
-                if key not in ['id', 'created_at', 'updated_at']:
+                if key not in ['id', 'created_at', 'updated_at', 'state_id']:
                     setattr(city, key, value)
                     city.save()
             return jsonify(city.to_dict())
