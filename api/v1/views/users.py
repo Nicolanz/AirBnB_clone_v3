@@ -50,6 +50,9 @@ def create_user():
         if "password" not in data.keys():
             abort(400, description="Missing password")
         user = User(email=data['email'], password=data['password'])
+        for key, value in data.items():
+            if key in ["first_name", "last_name"]:
+                setattr(user, key, value)
         storage.new(user)
         storage.save()
         response = make_response(jsonify(user.to_dict()), 201)
